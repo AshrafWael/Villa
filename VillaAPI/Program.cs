@@ -1,9 +1,17 @@
+using Serilog;
+using VillaAPI.CustomLogging;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add serv ices to the container.
+Log.Logger = new LoggerConfiguration()
+                 .MinimumLevel.Error().WriteTo
+                 .File("log/VillaLogging.txt",rollingInterval:RollingInterval.Day)
+                 .CreateLogger();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Host.UseSerilog();
+builder.Services.AddScoped<ILogging,Logging>();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
