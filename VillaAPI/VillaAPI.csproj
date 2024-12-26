@@ -10,4 +10,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IRepository\" />
+    <Folder Include="Mapping\" />
+    <Folder Include="Responses\" />
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>
