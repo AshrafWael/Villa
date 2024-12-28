@@ -2,9 +2,8 @@
 
 namespace VillaAPI.Dtos
 {
-    public class ReadVillaDto
+    public class AddVillaDto
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(30)]
         public string? Name { get; set; }
@@ -14,6 +13,7 @@ namespace VillaAPI.Dtos
         public string Amentiy { get; set; }
         public int Sqft { get; set; }
         public int Occupancy { get; set; }
+        public DateTime CraetedDtae { get; set; }
 
     }
 }
