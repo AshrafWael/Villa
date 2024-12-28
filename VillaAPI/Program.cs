@@ -1,20 +1,17 @@
-<<<<<<< HEAD
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using VillaAPI.Data;
+using VillaAPI.Mapping;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-=======
-
-
-var builder = WebApplication.CreateBuilder(args);
-
-// Add serv ices to the container.
-
-
-builder.Services.AddControllers().AddNewtonsoftJson();
->>>>>>> restore-d9bd21be
+// Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(Options =>
+{
+    Options.UseSqlServer(builder.Configuration.GetConnectionString("Cs"));
+});
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
