@@ -9,8 +9,8 @@ namespace VillaAPI.Mapping
         public MappingProfile()
         {
             CreateMap<Villa,AddVillaDto>().ReverseMap();
-            CreateMap<Villa, UpdateVillaDto>().ReverseMap();
-            CreateMap<Villa, ReadVillaDto>().ReverseMap();
+            CreateMap<Villa,UpdateVillaDto>().ReverseMap();
+            CreateMap<Villa,ReadVillaDto>().ReverseMap();
 
         }
     }
