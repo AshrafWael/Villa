@@ -117,7 +117,7 @@ namespace VillaAPI.Controllers
             return _response;
 
         }
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("id", Name = "DeleteVilla")]
@@ -151,7 +151,7 @@ namespace VillaAPI.Controllers
             }
             return _response;
         }
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("id", Name = "UpdateVilla")]
         public async Task<ActionResult<APIResponse>> UpdateVilla(int id, [FromBody] UpdateVillaDto villadto)
