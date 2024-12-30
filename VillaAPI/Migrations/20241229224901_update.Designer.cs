@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VillaAPI.Data;
 
@@ -11,9 +12,11 @@ using VillaAPI.Data;
 namespace VillaAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229224901_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +71,7 @@ namespace VillaAPI.Migrations
                         {
                             Id = 1,
                             Amentiy = "",
-                            CraetedDtae = new DateTime(2024, 12, 30, 3, 23, 27, 445, DateTimeKind.Local).AddTicks(1065),
+                            CraetedDtae = new DateTime(2024, 12, 30, 0, 48, 58, 711, DateTimeKind.Local).AddTicks(8115),
                             Description = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
                             Name = "Royal Villa",
@@ -81,7 +84,7 @@ namespace VillaAPI.Migrations
                         {
                             Id = 2,
                             Amentiy = "",
-                            CraetedDtae = new DateTime(2024, 12, 30, 3, 23, 27, 445, DateTimeKind.Local).AddTicks(1152),
+                            CraetedDtae = new DateTime(2024, 12, 30, 0, 48, 58, 711, DateTimeKind.Local).AddTicks(8162),
                             Description = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
                             Name = "Premium Pool Villa",
@@ -94,7 +97,7 @@ namespace VillaAPI.Migrations
                         {
                             Id = 3,
                             Amentiy = "",
-                            CraetedDtae = new DateTime(2024, 12, 30, 3, 23, 27, 445, DateTimeKind.Local).AddTicks(1156),
+                            CraetedDtae = new DateTime(2024, 12, 30, 0, 48, 58, 711, DateTimeKind.Local).AddTicks(8165),
                             Description = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
                             Name = "Luxury Pool Villa",
@@ -103,49 +106,6 @@ namespace VillaAPI.Migrations
                             Sqft = 750,
                             UpdatededDtae = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
-                });
-
-            modelBuilder.Entity("VillaAPI.Models.VillaNumber", b =>
-                {
-                    b.Property<int>("VillaNo")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("VillaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("VillaNo");
-
-                    b.HasIndex("VillaId")
-                        .IsUnique();
-
-                    b.ToTable("villaNumbers");
-                });
-
-            modelBuilder.Entity("VillaAPI.Models.VillaNumber", b =>
-                {
-                    b.HasOne("VillaAPI.Models.Villa", "Villa")
-                        .WithOne("VillaNumber")
-                        .HasForeignKey("VillaAPI.Models.VillaNumber", "VillaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Villa");
-                });
-
-            modelBuilder.Entity("VillaAPI.Models.Villa", b =>
-                {
-                    b.Navigation("VillaNumber")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
