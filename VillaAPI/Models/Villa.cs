@@ -16,7 +16,8 @@ namespace VillaAPI.Models
         public int Sqft {  get; set; }
         public int Occupancy { get; set; }
         public DateTime CraetedDtae { get; set; }
-        public DateTime UpdatededDtae { get; set; }
+        public DateTime UpdatededDtae { get; set; } 
+        public VillaNumber VillaNumber { get; set; }
 
 
     }
