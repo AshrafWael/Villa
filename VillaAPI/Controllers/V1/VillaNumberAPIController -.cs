@@ -10,10 +10,12 @@ using VillaAPI.Models;
 using VillaAPI.Responses;
 using VillaAPI.Dtos.VillaNumberDtos;
 
-namespace VillaAPI.Controllers
+namespace VillaAPI.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+
     public class VillaNumberAPIController : ControllerBase
     {
         protected APIResponse _response;
@@ -22,8 +24,8 @@ namespace VillaAPI.Controllers
         private readonly IVillaNumberRepository _villanumberrepo;
         private readonly IVillaRepository _villaRepository;
 
-        public VillaNumberAPIController(ApplicationDbContext dbContext, IMapper mapper, 
-                        IVillaNumberRepository villanumberrepo,IVillaRepository villaRepository)
+        public VillaNumberAPIController(ApplicationDbContext dbContext, IMapper mapper,
+                        IVillaNumberRepository villanumberrepo, IVillaRepository villaRepository)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -99,7 +101,7 @@ namespace VillaAPI.Controllers
                     ModelState.AddModelError("createdError", "Villa Number is already Exists");
                     return BadRequest(ModelState);
                 }
-                if (await _villaRepository.GetAsync(u=> u.Id == createdvilla.VillaId) == null)
+                if (await _villaRepository.GetAsync(u => u.Id == createdvilla.VillaId) == null)
                 {
                     ModelState.AddModelError("createdError", "Villa ID is Invalid!");
                     return BadRequest(ModelState);
@@ -183,7 +185,7 @@ namespace VillaAPI.Controllers
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
-            } 
+            }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;

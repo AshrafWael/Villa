@@ -8,11 +8,14 @@ using VillaAPI.Dtos;
 using VillaAPI.IRepository;
 using VillaAPI.Models;
 using VillaAPI.Responses;
+using Microsoft.AspNetCore.Authorization;
 
-namespace VillaAPI.Controllers
+namespace VillaAPI.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+
     public class VillaAPIController : ControllerBase
     {
         protected APIResponse _response;
@@ -30,6 +33,7 @@ namespace VillaAPI.Controllers
         [HttpGet]
         //Documnt Response 
         [ProducesResponseType(200)]
+        [Authorize]
         public async Task<ActionResult<APIResponse>> GetVillas()
         {
             try
@@ -51,9 +55,12 @@ namespace VillaAPI.Controllers
             return _response;
         }
         [HttpGet("id", Name = "GetVilla")]
+        //  [Authorize(Roles ="user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<APIResponse>> GetVillaById(int id)
         {
             try
@@ -83,6 +90,7 @@ namespace VillaAPI.Controllers
             return _response;
         }
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -121,6 +129,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpDelete("id", Name = "DeleteVilla")]
+        [Authorize(Roles = "Custom")]
         public async Task<ActionResult<APIResponse>> DeleteVilla(int id)
         {
             try
@@ -168,7 +177,7 @@ namespace VillaAPI.Controllers
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
-            } 
+            }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
