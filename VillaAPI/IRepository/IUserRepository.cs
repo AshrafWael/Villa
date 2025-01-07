@@ -7,6 +7,6 @@ namespace VillaAPI.IRepository
     {
         public bool IsUniqueUser(string username);
         public Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto);
-        public Task<User> Register(RegisterRequestDto registerRequestDto);
+        public Task<ApplicationUserDto> Register(RegisterRequestDto registerRequestDto);
     }
 }
