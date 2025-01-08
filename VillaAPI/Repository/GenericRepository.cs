@@ -13,12 +13,20 @@ namespace VillaAPI.Repository
             _dbContext = dbContext;
             _dbset = _dbContext.Set<T>();   
         }
-        public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>>? filter = null)
+        public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>>? filter = null,
+            int pagesize = 0,int pagenumber=1)
         {
             IQueryable<T> query = _dbset;
             if (filter != null) 
             {
               query = query.Where(filter);
+            }
+            if (pagesize >0)
+            {
+                if (pagesize > 100) 
+                { pagesize = 100; }
+                query = query.Skip(pagesize*(pagenumber-1)).Take(pagesize);
+            
             }
             return await query.ToListAsync();
         }
