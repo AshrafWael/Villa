@@ -9,6 +9,7 @@ using VillaAPI.IRepository;
 using VillaAPI.Models;
 using VillaAPI.Responses;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics.Eventing.Reader;
 
 namespace VillaAPI.Controllers.V1
 {
@@ -33,14 +34,28 @@ namespace VillaAPI.Controllers.V1
         [HttpGet]
         //Documnt Response 
         [ProducesResponseType(200)]
-        [Authorize]
-        public async Task<ActionResult<APIResponse>> GetVillas()
+        //  [Authorize]
+        [ResponseCache(Duration = 30)]
+        public async Task<ActionResult<APIResponse>> GetVillas([FromQuery(Name = "FilterOcupancy")] int? Ocupancy,
+            [FromQuery(Name = "Serch Filter")] string? Search)
         {
             try
             {
-                IEnumerable<Villa> VillaList = await _villarepo.GetAllAsync();
-                var mappedvilla = _mapper.Map<List<ReadVillaDto>>(VillaList);
+                IEnumerable<Villa> VillaList;
 
+                if (Ocupancy >0) 
+                {
+                    VillaList=  await _villarepo.GetAllAsync(u=> u.Occupancy == Ocupancy);
+                }
+                else
+                {
+                    VillaList = await _villarepo.GetAllAsync();
+                }
+                if(!string.IsNullOrEmpty(Search))
+                {
+                    VillaList = await _villarepo.GetAllAsync(u => u.Name.ToLower().Contains(Search));
+                }
+                var mappedvilla = _mapper.Map<List<ReadVillaDto>>(VillaList);
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.Result = mappedvilla;
                 _response.IsSuccess = true;
@@ -54,6 +69,7 @@ namespace VillaAPI.Controllers.V1
             }
             return _response;
         }
+        [ResponseCache(CacheProfileName = "Default30")]
         [HttpGet("id", Name = "GetVilla")]
         //  [Authorize(Roles ="user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -68,12 +84,14 @@ namespace VillaAPI.Controllers.V1
                 if (id == 0)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess= false;
                     return BadRequest(_response);
                 }
                 var villa = await _villarepo.GetAsync(a => a.Id == id);
                 if (villa == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
                     return NotFound(_response);
                 }
                 var mappedvilla = _mapper.Map<ReadVillaDto>(villa);
@@ -170,6 +188,8 @@ namespace VillaAPI.Controllers.V1
                 if (villadto == null || id != villadto.Id)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+
                     return BadRequest(_response);
                 }
                 var villamodel = _mapper.Map<Villa>(villadto);
