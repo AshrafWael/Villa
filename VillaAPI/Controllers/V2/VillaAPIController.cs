@@ -9,6 +9,7 @@ using VillaAPI.IRepository;
 using VillaAPI.Models;
 using VillaAPI.Responses;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace VillaAPI.Controllers.V2
 {
@@ -34,11 +35,13 @@ namespace VillaAPI.Controllers.V2
         //Documnt Response 
         [ProducesResponseType(200)]
         [Authorize]
-        public async Task<ActionResult<APIResponse>> GetVillas()
+        public async Task<ActionResult<APIResponse>> GetVillas( int pagesize = 0,int pagenumber = 1)
         {
             try
             {
-                IEnumerable<Villa> VillaList = await _villarepo.GetAllAsync();
+                IEnumerable<Villa> VillaList = await _villarepo.GetAllAsync(pagesize:pagesize ,pagenumber :pagenumber);
+                Pagination pagination = new Pagination() { PageNumber = pagenumber, PageSize = pagesize };
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
                 var mappedvilla = _mapper.Map<List<ReadVillaDto>>(VillaList);
 
                 _response.StatusCode = HttpStatusCode.OK;
@@ -68,12 +71,14 @@ namespace VillaAPI.Controllers.V2
                 if (id == 0)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(_response);
                 }
                 var villa = await _villarepo.GetAsync(a => a.Id == id);
                 if (villa == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
                     return NotFound(_response);
                 }
                 var mappedvilla = _mapper.Map<ReadVillaDto>(villa);
@@ -106,6 +111,7 @@ namespace VillaAPI.Controllers.V2
                 if (createdvilla == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     _response.Result = createdvilla;
                     return BadRequest(_response);
                 }
@@ -171,6 +177,7 @@ namespace VillaAPI.Controllers.V2
                 if (villadto == null || id != villadto.Id)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                     return BadRequest(_response);
                 }
                 var villamodel = _mapper.Map<Villa>(villadto);
