@@ -12,8 +12,8 @@ using VillaAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
+#region Add services to the container.
 builder.Services.AddControllers();
-// Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 {
     Options.UseSqlServer(builder.Configuration.GetConnectionString("Cs"));
@@ -22,14 +22,21 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddScoped<IVillaRepository,VillaRepository>();
 builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddControllers();
 
+builder.Services.AddControllers(options=> 
+{
+    options.CacheProfiles.Add("Default30", new CacheProfile
+    {
+        Duration = 30
+    });
+});
+builder.Services.AddResponseCaching();
+#region Versioning
 builder.Services.AddApiVersioning(options=>
 { 
 options.AssumeDefaultVersionWhenUnspecified = true;
     options.DefaultApiVersion = new ApiVersion(1,0);
     options.ReportApiVersions = true;
-
 });
 builder.Services.AddVersionedApiExplorer(options =>
 {
@@ -37,6 +44,8 @@ builder.Services.AddVersionedApiExplorer(options =>
     options.SubstituteApiVersionInUrl = true;
 
 });
+#endregion
+#region Swagger Doc
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -104,10 +113,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 
 });
-
+#endregion
+#region Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
-
+#endregion
+#region Authenyication
 var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
 builder.Services.AddAuthentication(a =>
   {
@@ -127,11 +138,9 @@ builder.Services.AddAuthentication(a =>
       
       
   });
-
-
-
+#endregion
+#endregion
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -143,7 +152,6 @@ if (app.Environment.IsDevelopment())
 
     });
 }
-
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
