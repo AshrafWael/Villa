@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using VillaAPI.Dtos;
 using VillaAPI.Dtos.AccountUserDtos;
+using VillaAPI.Dtos.VillaDtos;
 using VillaAPI.Dtos.VillaNumberDtos;
 using VillaAPI.Models;
 
