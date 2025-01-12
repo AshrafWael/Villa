@@ -4,12 +4,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using VillaAPI.Data;
-using VillaAPI.Dtos;
 using VillaAPI.IRepository;
 using VillaAPI.Models;
 using VillaAPI.Responses;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics.Eventing.Reader;
+using VillaAPI.Dtos.VillaDtos;
 
 namespace VillaAPI.Controllers.V1
 {
