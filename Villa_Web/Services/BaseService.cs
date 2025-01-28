@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
 using Villa_Utility;
@@ -13,16 +12,16 @@ namespace Villa_Web.Services
     public class BaseService : IBaseSrvice
     {
         //To call our API 
-        public IHttpClientFactory _httpClient {  get; set; }
+        public IHttpClientFactory _httpClient { get; set; }
         public BaseService(IHttpClientFactory httpClient)
         {
             this.ResponceModel = new();
             _httpClient = httpClient;
         }
-        public APIResponse ResponceModel 
+        public APIResponse ResponceModel
         {
-            get ;
-            set; 
+            get;
+            set;
 
         }
 
@@ -30,18 +29,18 @@ namespace Villa_Web.Services
         {
             try
             {
-                var Client = _httpClient.CreateClient("Villa API");
+                var Client = _httpClient.CreateClient("VillaAPI");
                 HttpRequestMessage message = new HttpRequestMessage();
                 message.Headers.Add("Accept", "application/json");
                 message.RequestUri = new Uri(apirequest.ApiUrl);
-                if (apirequest.Data != null) 
+                if (apirequest.Data != null)
                 {
                     message.Content = new StringContent(JsonConvert.SerializeObject(apirequest.Data)
                         , Encoding.UTF8, "application/json");
                 }
-                switch (apirequest.ApiType) 
+                switch (apirequest.ApiType)
                 {
-                    case StaticDta.ApiType.POST :
+                    case StaticDta.ApiType.POST:
                         message.Method = HttpMethod.Post;
                         break;
                     case StaticDta.ApiType.PUT:
@@ -74,4 +73,5 @@ namespace Villa_Web.Services
 
             }
         }
+    }
 }

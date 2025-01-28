@@ -38,7 +38,7 @@ namespace Villa_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.GET,
-                ApiUrl = VillaUrl + "/api/VillaAPI",
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI",
             });
         }
 
