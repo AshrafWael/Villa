@@ -14,22 +14,22 @@ namespace Villa_Web.Services
             _httpClient = httpClient;
             VillaUrl = configuration.GetValue<string>("ServiseUrls:VillAPI")!;
         }
-        public Task CreateAsync<T>(AddVillaDto villaDto)
+        public Task<T> CreateAsync<T>(AddVillaDto villaDto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.POST,
                 Data = villaDto,
-                ApiUrl = VillaUrl + "/api/VillaAPI",
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI",
             });
         }
 
-        public Task DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.DELETE,
-                ApiUrl = VillaUrl + "/api/VillaAPI"+id,
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI"+id,
             });
         }
 
@@ -47,17 +47,17 @@ namespace Villa_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.GET,
-                ApiUrl = VillaUrl + "/api/VillaAPI"+id,
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI"+id,
             });
         }
 
-        public Task UpdateAsync<T>(UpdateVillaDto updateVillaDto)
+        public Task<T> UpdateAsync<T>(UpdateVillaDto updateVillaDto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.PUT,
                 Data = updateVillaDto,
-                ApiUrl = VillaUrl + "/api/VillaAPI/"+updateVillaDto.Id,
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI/"+updateVillaDto.Id,
             });
         }
     }

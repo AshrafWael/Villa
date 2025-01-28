@@ -7,9 +7,9 @@ namespace Villa_Web.Services.IServices
     {
         Task<T> GetAllAsync<T>();
         Task<T> GetAsync<T>(int id);
-        Task CreateAsync<T>( AddVillaDto villaDto);
-        Task UpdateAsync<T>(UpdateVillaDto updateVillaDto );
-        Task DeleteAsync<T>(int id);
+        Task<T> CreateAsync<T>( AddVillaDto villaDto);
+        Task<T> UpdateAsync<T>(UpdateVillaDto updateVillaDto );
+        Task<T> DeleteAsync<T>(int id);
 
     }
 }

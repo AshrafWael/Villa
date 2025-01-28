@@ -22,7 +22,6 @@ namespace Villa_Web.Services
         {
             get;
             set;
-
         }
 
         public async Task<T> SendAsync<T>(APIRequest apirequest)
@@ -31,6 +30,7 @@ namespace Villa_Web.Services
             {
                 var Client = _httpClient.CreateClient("VillaAPI");
                 HttpRequestMessage message = new HttpRequestMessage();
+                //heder type 
                 message.Headers.Add("Accept", "application/json");
                 message.RequestUri = new Uri(apirequest.ApiUrl);
                 if (apirequest.Data != null)
@@ -54,6 +54,7 @@ namespace Villa_Web.Services
                         break;
                 }
                 HttpResponseMessage apiResponse = null;
+                //call our client
                 apiResponse = await Client.SendAsync(message);
                 var apicontent = await apiResponse.Content.ReadAsStringAsync();
                 var ApiResponse = JsonConvert.DeserializeObject<T>(apicontent);
@@ -64,7 +65,10 @@ namespace Villa_Web.Services
             {
                 var dto = new APIResponse
                 {
-                    Errors = new List<string>() { Convert.ToString(ex.Message) },
+                    Errors = new List<string>()
+                    { 
+                        Convert.ToString(ex.Message) 
+                    },
                     IsSuccess = false,
                 };
                 var result = JsonConvert.SerializeObject(dto);
