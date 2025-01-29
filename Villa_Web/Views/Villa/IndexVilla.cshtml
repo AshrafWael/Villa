@@ -5,5 +5,49 @@
 		<div class="col">
 			<h1 class="text-primary"> Villas List</h1>
 		</div>
+		<div class="col text-end pt-1">
+			<a asp-controller="Villa" asp-action="CreateVilla" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Create new Villa</a>
+		</div>
 	</div>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Rate</th>
+                <th>Image</th>
+                <th>Sqft</th>
+                <th>Occupancy</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var villa in Model)
+            {
+                <tr>
+                    <td>@villa.Id</td>
+                    <td>@villa.Name</td>
+                    <td>@villa.Description</td>
+                    <td>@((villa.Rate).ToString("c"))</td>
+                    <td>
+                        <img src="@villa.ImageUrl" alt="Villa Image" style="width: 100px; height: auto;" />
+                    </td>
+                    <td>@villa.Sqft</td>
+                    <td>@villa.Occupancy</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@villa.Id" class="btn btn-success btn-sm">
+                            <i class="bi bi-pencil-square"></i> 
+                        </a>
+                        <a asp-action="Details" asp-route-id="@villa.Id" class="btn btn-info btn-sm">
+                            <i class="bi bi-eye"></i> 
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@villa.Id" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i> 
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
