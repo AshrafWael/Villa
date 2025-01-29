@@ -25,8 +25,7 @@ namespace VillaAPI.Repository
             {
                 if (pagesize > 100) 
                 { pagesize = 100; }
-                query = query.Skip(pagesize*(pagenumber-1)).Take(pagesize);
-            
+                query = query.Skip(pagesize*(pagenumber-1)).Take(pagesize); 
             }
             return await query.ToListAsync();
         }
