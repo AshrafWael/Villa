@@ -116,7 +116,7 @@ builder.Services.AddSwaggerGen(c =>
 #endregion
 #region Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 #endregion
 #region Authenyication
 var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
