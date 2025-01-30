@@ -34,7 +34,7 @@ namespace VillaAPI.Controllers.V2
         [HttpGet]
         //Documnt Response 
         [ProducesResponseType(200)]
-        [Authorize]
+      //  [Authorize]
         public async Task<ActionResult<APIResponse>> GetVillas( int pagesize = 0,int pagenumber = 1)
         {
             try
@@ -57,8 +57,7 @@ namespace VillaAPI.Controllers.V2
             }
             return _response;
         }
-        [HttpGet("id", Name = "GetVilla")]
-      //  [Authorize(Roles ="user")]
+        [HttpGet("{id:int}")]       //  [Authorize(Roles ="user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -134,7 +133,7 @@ namespace VillaAPI.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpDelete("id", Name = "DeleteVilla")]
+        [HttpDelete("{id:int}")]
         [Authorize(Roles ="Custom")]
         public async Task<ActionResult<APIResponse>> DeleteVilla(int id)
         {
@@ -169,7 +168,7 @@ namespace VillaAPI.Controllers.V2
       //  [MapToApiVersion("2.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut("id", Name = "UpdateVilla")]
+        [HttpPut("{id:int}")]
         public async Task<ActionResult<APIResponse>> UpdateVilla(int id, [FromBody] UpdateVillaDto villadto)
         {
             try
