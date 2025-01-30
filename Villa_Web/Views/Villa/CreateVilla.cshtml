@@ -1,0 +1,69 @@
+﻿
+@model Villa_Web.Dtos.VillaDtos.AddVillaDto
+
+<div class="container p-4 border">
+    <h2 class="text-primary">Create New Villa</h2>
+    <hr />
+
+    <form asp-action="CreateVilla" method="post">
+        @Html.AntiForgeryToken()
+        
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Rate" class="form-label">Rate</label>
+            <input asp-for="Rate" type="number" step="0.01" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ImageUrl" class="form-label">Image URL</label>
+            <input asp-for="ImageUrl" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Amentiy" class="form-label">Amenity</label>
+            <input asp-for="Amentiy" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Sqft" class="form-label">Square Feet</label>
+            <input asp-for="Sqft" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Occupancy" class="form-label">Occupancy</label>
+            <input asp-for="Occupancy" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CraetedDtae" class="form-label">Created Date</label>
+            <input asp-for="CraetedDtae" type="date" class="form-control" />
+        </div>
+
+        <div class="text-end">
+            <input type="submit" value="Create" class="btn btn-success from-control"/>
+            @* <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Save
+            </button> *@
+            <a asp-action="IndexVilla" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name ="_ValidationScriptsPartial" />
+    @* @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    } *@
+}

@@ -36,13 +36,13 @@
                     <td>@villa.Sqft</td>
                     <td>@villa.Occupancy</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@villa.Id" class="btn btn-success btn-sm">
+                        <a asp-controller="Villa" asp-action="UpdateVilla" asp-route-id="@villa.Id" class="btn btn-success btn-sm">
                             <i class="bi bi-pencil-square"></i> 
                         </a>
-                        <a asp-action="Details" asp-route-id="@villa.Id" class="btn btn-info btn-sm">
+                        <a asp-controller="Villa" asp-action="VillaDetails" asp-route-id="@villa.Id" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i> 
                         </a>
-                        <a asp-action="Delete" asp-route-id="@villa.Id" class="btn btn-danger btn-sm">
+                        <a asp-controller="Villa" asp-action="DeleteVilla" asp-route-id="@villa.Id" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i> 
                         </a>
                     </td>
