@@ -29,7 +29,7 @@ namespace Villa_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.DELETE,
-                ApiUrl = VillaUrl + "/api/v1/VillaAPI"+id,
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI/"+id,
             });
         }
 
@@ -47,7 +47,7 @@ namespace Villa_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 ApiType = StaticDta.ApiType.GET,
-                ApiUrl = VillaUrl + "/api/v1/VillaAPI"+id,
+                ApiUrl = VillaUrl + "/api/v1/VillaAPI/"+id,
             });
         }
 
