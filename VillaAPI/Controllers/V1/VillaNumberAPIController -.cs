@@ -40,7 +40,7 @@ namespace VillaAPI.Controllers.V1
         {
             try
             {
-                IEnumerable<VillaNumber> VillanumberList = await _villanumberrepo.GetAllAsync();
+                IEnumerable<VillaNumber> VillanumberList = await _villanumberrepo.GetAllAsync(includs:["Villa"]);
                 var mappedvilla = _mapper.Map<List<ReadVillaNumberDto>>(VillanumberList);
 
                 _response.StatusCode = HttpStatusCode.OK;
@@ -56,7 +56,7 @@ namespace VillaAPI.Controllers.V1
             }
             return _response;
         }
-        [HttpGet("id", Name = "GetVillaNumber")]
+        [HttpGet("{number:int}", Name = "GetVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -69,10 +69,12 @@ namespace VillaAPI.Controllers.V1
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var villa = await _villanumberrepo.GetAsync(a => a.VillaNo == number);
+                var villa = await _villanumberrepo.GetAsync(a => a.VillaNo == number, includs: ["Villa"]);
                 if (villa == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
+
                     return NotFound(_response);
                 }
                 var mappedvilla = _mapper.Map<ReadVillaNumberDto>(villa);
@@ -118,7 +120,7 @@ namespace VillaAPI.Controllers.V1
                 _response.IsSuccess = true;
                 _response.Result = villamodel;
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetVilla", new { number = villamodel.VillaNo }, _response);
+                return CreatedAtRoute("GetVillaById", new { number = villamodel.VillaNo }, _response);
             }
             catch (Exception ex)
             {
