@@ -1,8 +1,73 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Villa_Web.Dtos.VillaDtos.ReadVillaDto>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Image / Banner -->
+<div class="text-center mb-4">
+    <img class="img-fluid rounded" src="images/home/slide1.jpg" alt="Luxury Villas">
 </div>
+
+<hr class="bg-primary" />
+
+<!-- Villas Grid -->
+
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary mb-4">Available Villas</h2>
+
+    <div class="row">
+        @foreach (var villa in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="card bg-black text-light border-light shadow-lg">
+                    <div class="row g-0">
+                        <!-- Villa Image -->
+                        <div class="col-md-4">
+                            <img src="@villa.ImageUrl" class="img-fluid rounded-start" alt="@villa.Name" style="height: 100%; object-fit: cover;">
+                        </div>
+
+                        <!-- Villa Details -->
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title text-warning">@villa.Name</h5>
+                                <p class="card-text text-muted">
+                                    @(villa.Description.Length > 100 ? villa.Description.Substring(0, 100) + "..." : villa.Description)
+                                </p>
+
+                                <ul class="list-unstyled">
+                                    <li><strong>Max Occupancy:</strong> @villa.Occupancy adults</li>
+                                    <li><strong>Villa Size:</strong> @villa.Sqft sqft</li>
+                                </ul>
+
+                                <!-- Price & Button -->
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-warning fw-bold fs-5">USD $@villa.Rate</span>
+                                    <a href="@Url.Action("Details", "Villas", new { id = villa.Id })" class="btn btn-success btn-sm">Book</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@* 
+@model  IEnumerable<Villa_Web.Dtos.VillaDtos.ReadVillaDto>
+
+<img class="d-block w-100 src="images/home/slide1.jpg" alt="">
+<hr />
+
+<div class="row"  style="--bs-gutter-x:0">
+	@foreach (var Villa in Model)
+	{ 
+	  <div class="p-4">
+		  
+	  </div>
+
+	
+	}
+
+
+</div> *@
+
