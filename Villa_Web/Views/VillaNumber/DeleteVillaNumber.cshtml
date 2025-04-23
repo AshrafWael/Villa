@@ -1,0 +1,38 @@
+﻿@model Villa_Web.ViewModels.ReadVillaNumberVM
+
+<div class="container p-4 border">
+    <h2 class="text-primary">Delete New VillaNumber</h2>
+    <hr />
+
+    <form asp-action="DeleteVillaNumber" method="post">
+        @Html.AntiForgeryToken()
+
+        <input hidden asp-for="VillaNumber.VillaNo" />
+        <div class="mb-3">
+            <label asp-for="VillaNumber.VillaNo" class="form-label">Villa Number</label>
+            <input asp-for="VillaNumber.VillaNo" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="VillaNumber.VillaId" class="form-label">Villa Id</label>
+            <select asp-for="VillaNumber.VillaId" class="form-select" asp-items="@Model.VillaList">
+                <option disabled selected>--Select Villa--</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="VillaNumber.Details" class="form-label">Description</label>
+            <textarea asp-for="VillaNumber.Details" class="form-control"></textarea>
+        </div>
+        <div class="text-end">
+            <input type="submit" value="Delete" class="btn btn-success from-control" />
+
+            <a asp-action="IndexVillaNumber" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
