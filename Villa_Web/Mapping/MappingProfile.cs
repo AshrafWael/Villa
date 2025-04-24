@@ -12,7 +12,9 @@ namespace Villa_Web.Mapping
         {
             CreateMap<Villa,AddVillaDto>().ReverseMap();
             CreateMap<Villa,UpdateVillaDto>().ReverseMap();
-          //  CreateMap<Villa, ReadVillaDto>().ReverseMap();
+            CreateMap<ReadVillaDto, UpdateVillaDto>().ReverseMap();
+
+            CreateMap<Villa, ReadVillaDto>().ReverseMap();
 
             CreateMap<ReadVillaDto,ReadVillaDto>().ReverseMap();
 
