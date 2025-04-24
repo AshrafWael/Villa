@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Villa_Web.Dtos.VillaDtos;
 
 namespace Villa_Web.Dtos.VillaNumberDtos
 {
@@ -9,6 +10,7 @@ namespace Villa_Web.Dtos.VillaNumberDtos
         public string Details { get; set; }
         [Required]
         public int VillaId { get; set; }
+        public ReadVillaDto Villa { get; set; }
 
     }
 }
