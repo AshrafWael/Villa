@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VillaAPI.Data;
 using VillaAPI.IRepository;
-
+using System.Linq.Expressions;
 namespace VillaAPI.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
@@ -13,13 +13,20 @@ namespace VillaAPI.Repository
             _dbContext = dbContext;
             _dbset = _dbContext.Set<T>();   
         }
-        public async Task<IEnumerable<T>> GetAllAsync(System.Linq.Expressions.Expression<Func<T, bool>>? filter = null,
-            int pagesize = 0,int pagenumber=1)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T,bool>> filter = null,
+            string?[] includs = null, int pagesize = 0,int pagenumber=1)
         {
             IQueryable<T> query = _dbset;
             if (filter != null) 
             {
               query = query.Where(filter);
+            }
+            if(includs !=null) 
+            {
+                foreach (var item in includs)
+                {
+                    query = query.Include(item);
+                }
             }
             if (pagesize >0)
             {
@@ -29,12 +36,20 @@ namespace VillaAPI.Repository
             }
             return await query.ToListAsync();
         }
-        public async Task<T> GetAsync(System.Linq.Expressions.Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null,
+            string?[] includs = null, bool tracked = true)
         {
             IQueryable<T> query = _dbset;
             if (filter != null)
             {
                 query = query.Where(filter);
+            }
+            if (includs != null)
+            {
+                foreach (var item in includs)
+                {
+                    query = query.Include(item);
+                }
             }
             if (!tracked)
             {

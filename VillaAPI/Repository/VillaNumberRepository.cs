@@ -12,7 +12,7 @@ namespace VillaAPI.Repository
         {
             _dbContext = dbContext;
         }
-        public async Task<VillaNumber> UpdateAsync(VillaNumber entity)
+        public async Task<VillaNumber> UpdateAsync(VillaNumber entity , string[] includs = null)
         {
             entity.UpdatedDate = DateTime.Now;
             _dbContext.villaNumbers.Update(entity);
