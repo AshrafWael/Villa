@@ -48,7 +48,7 @@ namespace Villa_Web.Controllers
              }
             return View(villadto);
         }
-        [HttpGet("{id:int}")]
+       
         public async Task<IActionResult> UpdateVilla(int id)
         {
             var villa = await _villaServices.GetAsync<APIResponse>(id);
@@ -64,7 +64,7 @@ namespace Villa_Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateVilla(UpdateVillaDto villaDto)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var response = await _villaServices.UpdateAsync<APIResponse>(villaDto);
                 if (response != null && response.IsSuccess)
@@ -72,6 +72,32 @@ namespace Villa_Web.Controllers
                     return RedirectToAction(nameof(IndexVilla));
                 }
             }
+            return View(villaDto);
+        }
+
+        public async Task<IActionResult> DeleteVilla(int id)
+        {
+            var villa = await _villaServices.GetAsync<APIResponse>(id);
+            if (villa != null && villa.IsSuccess)
+            {
+                var model = JsonConvert.DeserializeObject<Villa>(Convert.ToString(villa.Result)!)!;
+                var mappedvilla = _Mapper.Map<ReadVillaDto>(model);
+                return View(mappedvilla);
+            }
+        
+            return NotFound();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteVilla(ReadVillaDto villaDto)
+        {
+           
+                var response = await _villaServices.DeleteAsync<APIResponse>(villaDto.Id);
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(IndexVilla));
+                }
+            
             return View(villaDto);
         }
     }
